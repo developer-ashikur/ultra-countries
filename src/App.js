@@ -1,9 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Country from './components/Country/Country';
 
 function App() {
+  const [countries, setCountries] = useState([]);
+  useEffect(()=> {
+    fetch('https://restcountries.eu/rest/v2/all')
+    .then(res => res.json())
+    .then(data => setCountries(data))
+  }, []);
   return (
     <div className="App">
+      <h1>Ultra Countries: {countries.length}</h1>
+      {
+        countries.map(country => <Country country={country} key={country.name}></Country>)
+      }
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
